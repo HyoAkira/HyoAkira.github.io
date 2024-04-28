@@ -1,0 +1,93 @@
+% Doküman sınıfı ve seçenekleri
+\documentclass[
+    $if(fontsize)$
+    $fontsize$,
+    $endif$
+    $if(papersize)$
+    $papersize$paper,
+    $endif$
+    $for(classoption)$
+    $classoption$$sep$,
+    $endfor$
+]{article}
+
+% Font ayarları
+$if(fontfamily)$
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$else$
+\usepackage{lmodern} % Varsayılan font olarak Latin Modern kullan
+$endif$
+
+% Dil ve harf paketleri
+$if(lang)$
+\usepackage[$lang$]{babel}
+$endif$
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Başlık ve yazar bilgileri
+$if(title)$
+\title{$title$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$if(date)$
+\date{$date$}
+$else$
+\date{\today} % Tarih yoksa bugünün tarihini kullan
+$endif$
+
+% Diğer paketler ve ayarlar
+\usepackage{fontspec}
+\setmainfont{Adobe Garamond Pro}
+\usepackage{graphicx} % Resim ekleme
+\usepackage{hyperref} % URL ve hyperlink desteği
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black, % içindekiler bağlantılarının rengi
+    urlcolor=blue
+}
+\usepackage{parskip} % Paragraf girinti ayarı
+\usepackage{fancyhdr} % Başlık ve altbilgi ayarları
+\usepackage{lipsum} % Metin dolgu içerikleri için kullanılır, belgeyi test etmek için kullan
+\usepackage{multicol}
+% Metin uzunluğu ve genişliği
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+% Başlık ve altbilgi stilleri
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\leftmark}
+$if(altbilgi)$
+\fancyfoot[C]{$altbilgi$}
+$else$
+\fancyfoot[C]{\thepage}
+$endif$
+
+% Başlık ve altbilgi çizgileri
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Doküman içeriği
+\begin{document}
+
+$if(title)$
+\maketitle
+$endif$
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+$if(toc)$
+\tableofcontents
+\newpage
+$endif$
+
+$body$
+
+\end{document}
