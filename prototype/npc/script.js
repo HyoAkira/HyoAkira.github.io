@@ -1,5 +1,5 @@
-import Fuse from 'fuse.js';
-import * as _ from 'lodash';
+const Fuse = require("fuse.js")
+const _= require("lodash")
 const data = {
   "greetings": [
     "Merhaba, güzel ruh! Bugün seni görmek ne güzel!",
