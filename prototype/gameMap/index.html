@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyun Haritası</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        svg {
+            border: 1px solid #ccc;
+        }
+        .node {
+            stroke: #333;
+            stroke-width: 2px;
+        }
+        .link {
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+        text {
+            font-size: 12px;
+            fill: #fff; /* Yazı rengi */
+        }
+    </style>
+</head>
+<body>
+    <h1>Oyun Haritası</h1>
+    <svg width="1200" height="800"></svg>
+
+    <script>
+        const gameMapData = [
+            {
+                "yerAdi": "Alka'nın Barı",
+                "yerCode": "alka",
+                "aciklama": "Sakin bir bar, maceracıların buluşma noktası.",
+                "notAllowedCommand": ["uç", "zıpla"],
+                "sehir": "Guldingar"
+            },
+            {
+                "yerAdi": "Maceracılar Loncası",
+                "yerCode": "maceracilar",
+                "aciklama": "Maceracıların toplandığı lonca.",
+                "notAllowedCommand": ["yüz", "yüzme"],
+                "sehir": "Guldingar"
+            },
+            {
+                "yerAdi": "Karanlık Orman",
+                "yerCode": "orman",
+                "aciklama": "Efsanelere göre, burada kaybolanlar bir daha dönmez.",
+                "notAllowedCommand": ["uç", "zıpla"],
+                "sehir": "Myshtir"
+            },
+            {
+                "yerAdi": "Büyücüler Kulesi",
+                "yerCode": "kule",
+                "aciklama": "Büyücülerin eğitim aldığı yer.",
+                "notAllowedCommand": ["yüz", "koş"],
+                "sehir": "Myshtir"
+            },
+            {
+                "yerAdi": "Ejderha Mağarası",
+                "yerCode": "magara",
+                "aciklama": "Efsanevi bir ejderhanın saklandığı yer.",
+                "notAllowedCommand": ["yüz", "zıpla"],
+                "sehir": "Kaldor"
+            },
+            {
+                "yerAdi": "Yüksek Dağ",
+                "yerCode": "dag",
+                "aciklama": "Dünyanın en yüksek zirvesi.",
+                "notAllowedCommand": ["yüz", "koş"],
+                "sehir": "Kaldor"
+            }
+        ];
+
+        const cities = [...new Set(gameMapData.map(d => d.sehir))].map((sehir, i) => ({
+            id: sehir,
+            x: (i % 3) * 300 + 150,
+            y: Math.floor(i / 3) * 300 + 100,
+        }));
+
+        const svg = d3.select("svg");
+        const nodeSize = 80;
+
+        const nodes = gameMapData.map((d, i) => ({
+            id: d.yerCode,
+            x: (i % 3) * 300 + 150,
+            y: Math.floor(i / 3) * 250 + 500,
+            aciklama: d.aciklama,
+            yerAdi: d.yerAdi,
+            sehir: d.sehir
+        }));
+
+        const links = [];
+
+        nodes.forEach(node => {
+            links.push({ source: node.id, target: node.sehir });
+        });
+
+        for (let i = 0; i < cities.length; i++) {
+            for (let j = i + 1; j < cities.length; j++) {
+                links.push({ source: cities[i].id, target: cities[j].id });
+            }
+        }
+
+        const linkGroup = svg.selectAll(".link")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("class", "link");
+
+        const cityGroup = svg.selectAll(".city")
+            .data(cities)
+            .enter()
+            .append("g")
+            .attr("class", "city")
+            .attr("transform", d => `translate(${d.x},${d.y})`)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        cityGroup.append("circle")
+            .attr("r", nodeSize / 2)
+            .attr("fill", "#ff5733");
+
+        cityGroup.append("text")
+            .attr("dy", 4)
+            .attr("text-anchor", "middle")
+            .text(d => d.id);
+
+        const nodeGroup = svg.selectAll(".node")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", d => `translate(${d.x},${d.y})`)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        nodeGroup.append("circle")
+            .attr("r", nodeSize / 2)
+            .attr("fill", "#69b3a2");
+
+        nodeGroup.append("text")
+            .attr("dy", 4)
+            .attr("text-anchor", "middle")
+            .text(d => d.yerAdi);
+
+        function updateLinks() {
+            linkGroup.attr("x1", d => {
+                const sourceNode = nodes.find(n => n.id === d.source) || cities.find(c => c.id === d.source);
+                return sourceNode.x;
+            })
+            .attr("y1", d => {
+                const sourceNode = nodes.find(n => n.id === d.source) || cities.find(c => c.id === d.source);
+                return sourceNode.y;
+            })
+            .attr("x2", d => {
+                const targetNode = nodes.find(n => n.id === d.target) || cities.find(c => c.id === d.target);
+                return targetNode.x;
+            })
+            .attr("y2", d => {
+                const targetNode = nodes.find(n => n.id === d.target) || cities.find(c => c.id === d.target);
+                return targetNode.y;
+            });
+        }
+
+        function dragstarted(event) {
+            d3.select(this).raise().classed("active", true);
+        }
+
+        function dragged(event, d) {
+            const node = d3.select(this);
+            const newX = d.x = event.x;
+            const newY = d.y = event.y;
+
+            node.attr("transform", `translate(${newX},${newY})`);
+            updateLinks();
+        }
+
+        function dragended(event) {
+            d3.select(this).classed("active", false);
+        }
+
+        updateLinks();
+    </script>
+</body>
+</html>
