@@ -1,0 +1,22 @@
+{{/* Related articles partial - 5 items */}}
+{{ with site.RegularPages.Related . | first 5 }}
+  <div class="rounded-lg bg-surface-container p-space-lg shadow-md flex flex-col gap-space-md">
+    <div class="flex items-center gap-space-xs text-primary">
+      <span class="material-symbols-outlined text-[20px]">auto_stories</span>
+      <h3 class="font-headline-sm text-headline-sm tracking-tight">İlgili Makaleler</h3>
+    </div>
+    <div class="flex flex-col gap-space-sm">
+      {{ range . }}
+        <a href="{{ .RelPermalink }}" class="group flex items-center gap-space-sm">
+          <div class="w-16 h-16 rounded-DEFAULT bg-surface-container-highest overflow-hidden flex-shrink-0 flex items-center justify-center text-primary-container/60">
+            <span class="material-symbols-outlined text-[28px]">article</span>
+          </div>
+          <div class="flex flex-col justify-center min-w-0">
+            <h4 class="font-body-sm text-body-sm font-semibold text-primary truncate group-hover:text-primary-container transition-colors">{{ .Title }}</h4>
+            <span class="font-label-md text-label-md text-outline">{{ .Date.Format "2 January 2006" }}</span>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+{{ end }}

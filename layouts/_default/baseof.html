@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language.Locale | default "en" }}">
+<html class="dark" lang="{{ .Site.Language.Locale | default "en" }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ block "title" . }}{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}{{ end }}</title>
   {{ partial "seo-meta.html" . }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Rubik:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  {{ $css := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ block "head" . }}{{ end }}
 </head>
-<body>
-  <header>
-    <nav>
-      {{ range .Site.Menus.main }}
-        <a href="{{ .URL }}">{{ .Name }}</a>
-      {{ end }}
-    </nav>
-  </header>
-  <main>
-    {{ block "main" . }}{{ end }}
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+  {{ partial "header.html" . }}
+  <main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]">
+    <div class="flex flex-col w-full">
+      {{ block "main" . }}{{ end }}
+    </div>
   </main>
-  <footer>
-    <p>&copy; {{ now.Year }} {{ .Site.Params.author }}. {{ .Site.Copyright }}</p>
-  </footer>
+  {{ partial "footer.html" . }}
+  {{ block "scripts" . }}{{ end }}
 </body>
 </html>

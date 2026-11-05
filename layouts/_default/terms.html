@@ -1,12 +1,24 @@
 {{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-<section>
-  <h1>{{ .Title }}</h1>
-  <ul>
-    {{ range .Pages }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
-</section>
+<div class="w-full px-gutter py-space-xl">
+  <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+    <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">{{ .Title }}</h1>
+    {{ .Content }}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+      {{ range .Pages }}
+        <article class="flex flex-col rounded-3xl bg-surface-container-low overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2 group">
+          <div class="p-6 flex flex-col gap-space-md">
+            <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-primary-container transition-colors line-clamp-2">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+              {{ with .Description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}
+            </p>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+  </div>
+</div>
 {{ end }}

@@ -1,9 +1,15 @@
-{{ define "title" }}Page not found | {{ .Site.Title }}{{ end }}
+{{ define "title" }}Sayfa Bulunamadı | {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-<section>
-  <h1>404 — Page not found</h1>
-  <p>The page you requested does not exist.</p>
-  <p><a href="/">Go to homepage</a></p>
-</section>
+<div class="w-full px-gutter py-space-xl">
+  <div class="max-w-3xl mx-auto flex flex-col items-center text-center gap-space-lg">
+    <span class="material-symbols-outlined text-[96px] text-primary-container">explore_off</span>
+    <h1 class="font-headline-xl text-headline-xl text-primary tracking-tight">404 — Sayfa Bulunamadı</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Aradığınız sayfa mevcut değil veya taşınmış olabilir.</p>
+    <a class="inline-flex items-center gap-space-xs px-space-lg py-3 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-lg shadow-primary-container/20 transition-all hover:scale-105 active:scale-95" href="/">
+      <span>Anasayfaya Dön</span>
+      <span class="material-symbols-outlined text-[18px]">home</span>
+    </a>
+  </div>
+</div>
 {{ end }}

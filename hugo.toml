@@ -76,5 +76,17 @@ enableGitInfo = true
     url = "/about/"
     weight = 30
 
-[imaging]
-  quality = 85
+[related]
+  includeNewer = true
+  threshold = 70
+  toLower = true
+  [[related.indices]]
+    name = 'tags'
+    weight = 80
+  [[related.indices]]
+    name = 'keywords'
+    weight = 100
+  [[related.indices]]
+    name = 'date'
+    weight = 10
+    pattern = '2006'

@@ -1,23 +1,84 @@
 {{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-<section>
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  <ul class="post-list">
-    {{ range .Pages }}
-      <li>
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-        <span>{{ .Date.Format "2006-01-02" }}</span>
-        {{ with .Description }}<p>{{ . }}</p>{{ end }}
-      </li>
-    {{ end }}
-  </ul>
-  {{ if .Paginator }}
-    <nav class="pagination">
-      {{ if .Paginator.HasPrev }}<a href="{{ .Paginator.Prev.URL }}">Previous</a>{{ end }}
-      {{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL }}">Next</a>{{ end }}
-    </nav>
-  {{ end }}
-</section>
+<div class="flex flex-col w-full">
+  <!-- Carousel: Random Articles -->
+  <section class="relative w-full px-gutter pt-space-md pb-space-lg overflow-hidden">
+    <div class="w-full max-w-7xl mx-auto">
+      <div class="flex items-center justify-between mb-space-md">
+        <div class="flex items-center gap-space-sm">
+          <span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+          <h2 class="font-headline-md text-headline-md text-primary tracking-tight">Öne Çıkanlar &amp; Son Yazılar</h2>
+        </div>
+      </div>
+      <div class="relative w-full overflow-hidden">
+        <div class="flex gap-space-lg overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 no-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
+          {{ partial "random-articles.html" . }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Grid -->
+  <section class="w-full px-gutter pb-space-xl">
+    <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+      <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">{{ .Title }}</h2>
+      {{ .Content }}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+        {{ range .Paginator.Pages }}
+          <article class="post-card group flex flex-col justify-between rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-300 p-space-md shadow-md hover:-translate-y-1">
+            <div class="flex flex-col gap-space-sm">
+              <div class="relative w-full h-48 rounded-xl overflow-hidden bg-surface-container-lowest">
+                <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-secondary-container/15 blur-xl group-hover:scale-125 transition-transform duration-500"></div>
+                <div class="absolute top-3 left-3 z-10">
+                  {{ with .Params.categories }}<span class="px-3 py-1 rounded-full bg-surface-container/90 backdrop-blur-md text-secondary-fixed-dim font-label-md text-label-md font-semibold">{{ index . 0 }}</span>{{ end }}
+                </div>
+                <div class="z-10 flex items-center justify-end text-secondary-fixed-dim/80 h-full p-6">
+                  <span class="material-symbols-outlined text-[44px]">hub</span>
+                </div>
+              </div>
+              <div class="flex items-center text-on-surface-variant font-label-md text-label-md pt-space-xs">
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[16px] text-outline">calendar_today</span>
+                  <span>{{ .Date.Format "2 January 2006" }}</span>
+                </div>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary-fixed-dim transition-colors line-clamp-2">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              </h3>
+              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+                {{ with .Description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}
+              </p>
+            </div>
+            <div class="pt-space-md mt-space-md flex items-center justify-between border-t border-surface-container-high">
+              <div class="flex items-center gap-1 text-secondary-fixed-dim font-label-md text-label-md">
+                <span class="material-symbols-outlined text-[16px]">schedule</span>
+                <span>{{ .ReadingTime }} dk okuma</span>
+              </div>
+              <a class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md group-hover:translate-x-1 transition-transform font-medium" href="{{ .RelPermalink }}">
+                <span>Yazıyı Oku</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+        {{ end }}
+      </div>
+
+      <!-- Pagination -->
+      {{ if .Paginator }}
+        <nav class="flex items-center justify-center gap-space-sm pt-space-md">
+          {{ if .Paginator.HasPrev }}
+            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Prev.URL }}">Önceki</a>
+          {{ end }}
+          {{ range .Paginator.Pagers }}
+            <a class="px-space-md py-space-sm rounded-xl {{ if eq .PageNumber $.Paginator.PageNumber }}bg-primary-container text-on-primary-container{{ else }}bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high{{ end }} transition-colors" href="{{ .URL }}">{{ .PageNumber }}</a>
+          {{ end }}
+          {{ if .Paginator.HasNext }}
+            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Next.URL }}">Sonraki</a>
+          {{ end }}
+        </nav>
+      {{ end }}
+    </div>
+  </section>
+</div>
 {{ end }}

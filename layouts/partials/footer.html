@@ -1,0 +1,20 @@
+{{/* Footer partial */}}
+<footer class="w-full bg-surface-container-lowest py-space-xl shadow-[0_-1px_12px_rgba(0,0,0,0.3)]">
+  <div class="w-full px-gutter flex flex-col gap-space-xl">
+    <div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left">
+      <p class="font-body-sm text-body-sm text-on-surface-variant">&copy; {{ now.Year }} {{ .Site.Params.author }}. Tüm hakları saklıdır.</p>
+      <div class="flex items-center gap-space-md">
+        {{ with .Site.Params.social.github }}
+          <a href="https://github.com/{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-primary flex items-center justify-center transition-colors border border-surface-variant/40">
+            <span class="material-symbols-outlined text-[16px]">code</span>
+          </a>
+        {{ end }}
+        {{ with .Site.Params.social.linkedin }}
+          <a href="https://linkedin.com/in/{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-secondary-fixed-dim flex items-center justify-center transition-colors border border-surface-variant/40">
+            <span class="material-symbols-outlined text-[16px]">work</span>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</footer>
