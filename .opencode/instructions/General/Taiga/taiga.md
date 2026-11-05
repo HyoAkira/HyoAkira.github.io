@@ -50,6 +50,16 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc
 | 6 | SEO verification | Closed |
 | 7 | Deferred theme work (Tailwind) | New |
 
-## Notes
-- PATCH requests require a `version` field (optimistic locking). GET the resource first to obtain current version.
-- Tokens expire; re-authenticate if API returns 401.
+## AI Agent User
+- **Username:** ai-agent
+- **Password:** aiagent123
+- **Email:** ai-agent@localhost
+- **User ID:** 6
+- **Role in project:** Product Owner (role id 5)
+- **Membership ID:** 2
+- **Created via:** Django createsuperuser in taiga-back container
+
+Cached token (may expire; re-authenticate if 401):
+```
+Use /api/v1/auth with username ai-agent / password aiagent123
+```
