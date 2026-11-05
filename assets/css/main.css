@@ -21,7 +21,26 @@
   }
 }
 
-/* Material Symbols base */
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
+/* Markdown content support (reference styling) */
+.markdown-body h1 { @apply font-headline-xl text-headline-xl text-primary tracking-tight mt-space-lg mb-space-sm; }
+.markdown-body h2 { @apply font-headline-lg text-headline-lg text-primary tracking-tight mt-space-lg mb-space-sm; }
+.markdown-body h3 { @apply font-headline-sm text-headline-sm text-primary mt-space-md mb-space-xs; }
+.markdown-body p { @apply font-body-md text-body-md text-on-surface-variant mb-space-md; }
+.markdown-body a { @apply text-primary-container hover:text-primary underline underline-offset-2; }
+.markdown-body strong { @apply text-primary font-semibold; }
+.markdown-body code { @apply px-1.5 py-0.5 rounded bg-surface-container-high text-primary-container font-mono text-[14px]; }
+.markdown-body pre { @apply my-space-md p-space-md rounded-DEFAULT bg-surface-container-lowest border border-surface-variant/40 overflow-x-auto font-mono text-sm text-on-surface leading-relaxed; }
+.markdown-body pre code { @apply bg-transparent p-0 text-inherit; }
+.markdown-body blockquote { @apply my-space-lg p-space-md pl-space-lg rounded-r-DEFAULT bg-surface-container border-l-4 border-primary-container text-primary font-headline-sm italic leading-snug; }
+.markdown-body blockquote footer { @apply text-label-md font-sans text-secondary-fixed-dim mt-2 not-italic font-medium; }
+.markdown-body table { @apply w-full text-left font-body-sm text-body-sm border border-surface-variant/40 rounded-DEFAULT overflow-hidden; }
+.markdown-body thead { @apply bg-surface-container text-primary font-label-md text-label-md uppercase tracking-wider; }
+.markdown-body th, .markdown-body td { @apply p-space-sm border-b border-surface-variant/40; }
+.markdown-body tbody tr:nth-child(even) { @apply bg-surface-container-lowest; }
+.markdown-body ul, .markdown-body ol { @apply mb-space-md pl-space-lg text-on-surface-variant; }
+.markdown-body li { @apply mb-space-xs; }
+.markdown-body hr { @apply border-surface-variant/40 my-space-lg; }
+.markdown-body figure { @apply my-space-md rounded-lg overflow-hidden bg-surface-container-low shadow-md; }
+.markdown-body figcaption { @apply p-space-sm bg-surface-container-high/90 text-on-surface-variant font-label-md text-label-md; }
+.markdown-body img { @apply w-full h-auto object-cover; }
+.markdown-body .first-letter-drop::first-letter { @apply text-5xl font-headline-xl text-primary-container float-left mr-3 leading-none; }

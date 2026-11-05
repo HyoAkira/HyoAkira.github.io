@@ -19,6 +19,29 @@
     </div>
   </section>
 
+  <!-- Interactive Controls: Filter Pills & Search -->
+  <section class="w-full px-gutter pb-space-lg">
+    <div class="w-full max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-space-md bg-surface-container-low p-space-md rounded-lg shadow-sm">
+      <div class="flex flex-wrap items-center gap-space-xs" id="categoryPillContainer">
+        <button class="category-pill active-pill px-space-md py-space-sm rounded-xl font-label-md text-label-md bg-primary-container text-on-primary-container transition-all" data-cat="all" type="button">
+          {{ i18n "all" | default "Tümü" }} ({{ len .Pages }})
+        </button>
+        {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+          <button class="category-pill px-space-md py-space-sm rounded-xl font-label-md text-label-md bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" data-cat="{{ $name }}" type="button">
+            {{ $name }}
+          </button>
+        {{ end }}
+      </div>
+      <div class="relative w-full md:w-80">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary-container text-[20px]">search</span>
+        <input class="w-full bg-surface-container text-on-surface pl-10 pr-space-md py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-high transition-all shadow-inner" id="postSearchInput" placeholder="{{ i18n "search_posts" | default "Yazılarda veya etiketlerde ara..." }}" type="text">
+        <button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface text-[14px]" id="clearSearchBtn" type="button">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- Post Grid -->
   <section class="w-full px-gutter pb-space-xl">
     <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
@@ -26,10 +49,10 @@
       {{ .Content }}
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
         {{ range .Paginator.Pages }}
-          <article class="post-card group flex flex-col justify-between rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-300 p-space-md shadow-md hover:-translate-y-1">
+          <article class="post-card group flex flex-col justify-between rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-300 p-space-md shadow-md hover:-translate-y-1" data-category="{{ with .Params.categories }}{{ index . 0 | lower }}{{ end }}" data-title="{{ .Title | lower }}">
+
             <div class="flex flex-col gap-space-sm">
               <div class="relative w-full h-48 rounded-xl overflow-hidden bg-surface-container-lowest">
-                <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-secondary-container/15 blur-xl group-hover:scale-125 transition-transform duration-500"></div>
                 <div class="absolute top-3 left-3 z-10">
                   {{ with .Params.categories }}<span class="px-3 py-1 rounded-full bg-surface-container/90 backdrop-blur-md text-secondary-fixed-dim font-label-md text-label-md font-semibold">{{ index . 0 }}</span>{{ end }}
                 </div>
@@ -53,10 +76,10 @@
             <div class="pt-space-md mt-space-md flex items-center justify-between border-t border-surface-container-high">
               <div class="flex items-center gap-1 text-secondary-fixed-dim font-label-md text-label-md">
                 <span class="material-symbols-outlined text-[16px]">schedule</span>
-                <span>{{ .ReadingTime }} dk okuma</span>
+                <span>{{ .ReadingTime }} {{ i18n "min_read" }}</span>
               </div>
               <a class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md group-hover:translate-x-1 transition-transform font-medium" href="{{ .RelPermalink }}">
-                <span>Yazıyı Oku</span>
+                <span>{{ i18n "read_article" }}</span>
                 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
               </a>
             </div>
@@ -68,17 +91,54 @@
       {{ if .Paginator }}
         <nav class="flex items-center justify-center gap-space-sm pt-space-md">
           {{ if .Paginator.HasPrev }}
-            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Prev.URL }}">Önceki</a>
+            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Prev.URL }}">{{ i18n "previous" }}</a>
           {{ end }}
           {{ range .Paginator.Pagers }}
             <a class="px-space-md py-space-sm rounded-xl {{ if eq .PageNumber $.Paginator.PageNumber }}bg-primary-container text-on-primary-container{{ else }}bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high{{ end }} transition-colors" href="{{ .URL }}">{{ .PageNumber }}</a>
           {{ end }}
           {{ if .Paginator.HasNext }}
-            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Next.URL }}">Sonraki</a>
+            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Next.URL }}">{{ i18n "next" }}</a>
           {{ end }}
         </nav>
       {{ end }}
     </div>
   </section>
 </div>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const pills = document.querySelectorAll('.category-pill');
+  const cards = document.querySelectorAll('.post-card');
+  const searchInput = document.getElementById('postSearchInput');
+  const clearBtn = document.getElementById('clearSearchBtn');
+  let activeCat = 'all';
+  function filter() {
+    const q = (searchInput.value || '').toLowerCase().trim();
+    cards.forEach(card => {
+      const cat = (card.dataset.category || '').toLowerCase();
+      const title = (card.dataset.title || '').toLowerCase();
+      const catMatch = activeCat === 'all' || cat === activeCat;
+      const searchMatch = !q || title.includes(q) || cat.includes(q);
+      card.style.display = (catMatch && searchMatch) ? '' : 'none';
+    });
+    if (clearBtn) clearBtn.classList.toggle('hidden', !q);
+  }
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => {
+        p.classList.remove('active-pill','bg-primary-container','text-on-primary-container');
+        p.classList.add('bg-surface-container','text-on-surface-variant');
+      });
+      pill.classList.add('active-pill','bg-primary-container','text-on-primary-container');
+      pill.classList.remove('bg-surface-container','text-on-surface-variant');
+      activeCat = pill.dataset.cat;
+      filter();
+    });
+  });
+  if (searchInput) searchInput.addEventListener('input', filter);
+  if (clearBtn) clearBtn.addEventListener('click', () => { searchInput.value = ''; filter(); });
+});
+</script>
 {{ end }}

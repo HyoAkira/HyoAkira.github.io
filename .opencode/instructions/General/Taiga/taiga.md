@@ -63,3 +63,14 @@ Cached token (may expire; re-authenticate if 401):
 ```
 Use /api/v1/auth with username ai-agent / password aiagent123
 ```
+
+## User Stories (all Done)
+| ID | Subject |
+|----|---------|
+| 1 | Hugo blog infrastructure setup |
+| 3 | Blog features: tags, related and random articles |
+| 4 | Hugo theme with daisyUI (reference design) |
+| 5 | Post-launch enhancements: i18n, math/code, filtering, UX fixes |
+
+## Tasks
+All tasks (1-25) are Closed. No open tasks.

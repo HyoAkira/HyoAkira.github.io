@@ -13,13 +13,20 @@
     </div>
     <div class="flex items-center gap-space-md">
       <div class="relative hidden sm:block w-48 lg:w-64">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
-        <input class="w-full bg-surface-container-low text-on-surface pl-9 pr-space-md py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container transition-all" placeholder="Evreni keşfet..." type="text">
+        <input class="w-full bg-surface-container-low text-on-surface pl-space-md pr-9 py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container transition-all" placeholder="{{ i18n "search_placeholder" }}" type="text">
+        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
       </div>
-      <button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container-high text-secondary-fixed-dim hover:text-secondary font-label-md text-label-md transition-all" type="button">
+      {{ $other := "" }}
+      {{ range .Translations }}
+        {{ if ne .Language.Lang $.Language.Lang }}{{ $other = .RelPermalink }}{{ end }}
+      {{ end }}
+      {{ if not $other }}
+        {{ if eq .Language.Lang "tr" }}{{ $other = "/en/" }}{{ else }}{{ $other = "/" }}{{ end }}
+      {{ end }}
+      <a href="{{ $other }}" class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container-high text-secondary-fixed-dim hover:text-secondary font-label-md text-label-md transition-all">
         <span class="material-symbols-outlined text-[16px]">language</span>
-        <span class="font-label-md text-label-md tracking-wider font-semibold">TR / EN</span>
-      </button>
+        <span class="font-label-md text-label-md tracking-wider font-semibold">{{ .Language.Label }} / {{ if eq .Language.Lang "tr" }}EN{{ else }}TR{{ end }}</span>
+      </a>
     </div>
   </div>
 </header>

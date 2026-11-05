@@ -1,5 +1,7 @@
 baseURL = "https://hyoakira.github.io/"
-locale = "en-us"
+defaultContentLanguage = "tr"
+defaultContentLanguageInSubdir = false
+locale = "tr"
 title = "Umut Can AKÇAY"
 copyright = "© 2026 Umut Can AKÇAY"
 enableRobotsTXT = true
@@ -50,8 +52,13 @@ enableGitInfo = true
 [markup]
   [markup.goldmark.renderer]
     unsafe = false
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block = [['$$', '$$']]
+      inline = [['$', '$']]
   [markup.highlight]
-    style = "github"
+    style = "dracula"
     lineNos = true
     codeFences = true
 
@@ -62,19 +69,45 @@ enableGitInfo = true
   date = ["date", "publishDate", "lastmod"]
   lastmod = ["lastmod", ":git", "date"]
 
-[menus]
-  [[menus.main]]
-    name = "Home"
-    url = "/"
-    weight = 10
-  [[menus.main]]
-    name = "Posts"
-    url = "/posts/"
-    weight = 20
-  [[menus.main]]
-    name = "About"
-    url = "/about/"
-    weight = 30
+[languages]
+  [languages.tr]
+    languageName = "Türkçe"
+    weight = 1
+    title = "Umut Can AKÇAY"
+    [languages.tr.params]
+      description = "Kişisel, akademik olmayan yazılar: yazılım mühendisliği, matematik ve daha fazlası."
+    [languages.tr.menus]
+      [[languages.tr.menus.main]]
+        name = "Anasayfa"
+        pageRef = "/"
+        weight = 10
+      [[languages.tr.menus.main]]
+        name = "Postlar"
+        pageRef = "/posts/"
+        weight = 20
+      [[languages.tr.menus.main]]
+        name = "Hakkımda"
+        pageRef = "/about/"
+        weight = 30
+  [languages.en]
+    languageName = "English"
+    weight = 2
+    title = "Umut Can AKÇAY"
+    [languages.en.params]
+      description = "Personal, non-academic writings on software engineering, mathematics, and more."
+    [languages.en.menus]
+      [[languages.en.menus.main]]
+        name = "Home"
+        pageRef = "/"
+        weight = 10
+      [[languages.en.menus.main]]
+        name = "Posts"
+        pageRef = "/posts/"
+        weight = 20
+      [[languages.en.menus.main]]
+        name = "About"
+        pageRef = "/about/"
+        weight = 30
 
 [related]
   includeNewer = true
