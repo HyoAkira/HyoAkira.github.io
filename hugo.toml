@@ -1,0 +1,80 @@
+baseURL = "https://hyoakira.github.io/"
+locale = "en-us"
+title = "Umut Can AKÇAY"
+copyright = "© 2026 Umut Can AKÇAY"
+enableRobotsTXT = true
+enableGitInfo = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "Personal, non-academic writings on software engineering, mathematics, and more."
+  author = "Umut Can AKÇAY"
+  email = "can.akcay@aol.com"
+  [params.social]
+    github = "hyoakira"
+    linkedin = "umutcanakcay"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[permalinks]
+  posts = "/posts/:slug/"
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+
+[services]
+  [services.rss]
+    limit = 20
+
+[privacy]
+  [privacy.googleAnalytics]
+    disable = true
+    respectDoNotTrack = true
+  [privacy.x]
+    enableDNT = true
+  [privacy.youTube]
+    privacyEnhanced = true
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = false
+  [markup.highlight]
+    style = "github"
+    lineNos = true
+    codeFences = true
+
+[minify]
+  minifyOutput = true
+
+[frontmatter]
+  date = ["date", "publishDate", "lastmod"]
+  lastmod = ["lastmod", ":git", "date"]
+
+[menus]
+  [[menus.main]]
+    name = "Home"
+    url = "/"
+    weight = 10
+  [[menus.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 20
+  [[menus.main]]
+    name = "About"
+    url = "/about/"
+    weight = 30
+
+[imaging]
+  quality = 85

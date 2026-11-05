@@ -1,0 +1,23 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<section>
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <ul class="post-list">
+    {{ range .Pages }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span>{{ .Date.Format "2006-01-02" }}</span>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      </li>
+    {{ end }}
+  </ul>
+  {{ if .Paginator }}
+    <nav class="pagination">
+      {{ if .Paginator.HasPrev }}<a href="{{ .Paginator.Prev.URL }}">Previous</a>{{ end }}
+      {{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL }}">Next</a>{{ end }}
+    </nav>
+  {{ end }}
+</section>
+{{ end }}
