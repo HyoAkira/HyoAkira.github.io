@@ -1,6 +1,6 @@
 ---
 title: "Welcome"
-date: 2026-11-06
+date: 2026-11-01
 draft: false
 description: "First post on this blog — a placeholder to be replaced with real content."
 tags: ["intro"]
