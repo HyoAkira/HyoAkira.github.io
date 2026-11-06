@@ -5,8 +5,8 @@
 <div class="relative w-full overflow-hidden">
   <!-- Hero Section -->
   <section class="w-full px-gutter py-space-xl lg:py-24">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-      <div class="lg:col-span-7 flex flex-col gap-space-lg">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 gap-space-xl items-center">
+      <div class="flex flex-col gap-space-lg">
         <div class="flex flex-col gap-space-sm">
           <h1 class="font-headline-xl text-headline-xl text-primary tracking-tight leading-none">{{ .Site.Title }}</h1>
           <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">{{ .Site.Params.description }}</p>
@@ -20,17 +20,6 @@
             <span>{{ i18n "about_contact" }}</span>
             <span class="material-symbols-outlined text-[18px]">psychology</span>
           </a>
-        </div>
-      </div>
-      <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
-        <div class="relative w-full max-w-md">
-          <div class="absolute inset-0 bg-gradient-to-tr from-secondary-container/20 via-primary-container/20 to-tertiary-container/10 rounded-3xl blur-2xl transform rotate-3"></div>
-          <div class="relative bg-surface-container-low rounded-3xl p-6 shadow-xl overflow-hidden flex flex-col gap-4">
-            <div class="relative w-full h-48 rounded-2xl bg-surface-container-highest overflow-hidden flex items-center justify-center">
-              <span class="material-symbols-outlined text-[64px] text-outline/40">image</span>
-            </div>
-            <p class="font-body-md text-body-md text-on-surface-variant">{{ i18n "hero_desc" }}</p>
-          </div>
         </div>
       </div>
     </div>
