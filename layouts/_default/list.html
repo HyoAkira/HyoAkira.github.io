@@ -28,13 +28,13 @@
         </button>
         {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
           <button class="category-pill px-space-md py-space-sm rounded-xl font-label-md text-label-md bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" data-cat="{{ $name }}" type="button">
-            {{ $name }}
+            {{ $name | title }}
           </button>
         {{ end }}
       </div>
       <div class="relative w-full md:w-80">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary-container text-[20px]">search</span>
-        <input class="w-full bg-surface-container text-on-surface pl-10 pr-space-md py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-high transition-all shadow-inner" id="postSearchInput" placeholder="{{ i18n "search_posts" | default "Yazılarda veya etiketlerde ara..." }}" type="text">
+        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-primary-container text-[20px]">search</span>
+        <input class="w-full bg-surface-container text-on-surface pl-space-md pr-10 py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-high transition-all shadow-inner" id="postSearchInput" placeholder="{{ i18n "search_posts" | default "Yazılarda veya etiketlerde ara..." }}" type="text">
         <button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface text-[14px]" id="clearSearchBtn" type="button">
           <span class="material-symbols-outlined text-[18px]">close</span>
         </button>

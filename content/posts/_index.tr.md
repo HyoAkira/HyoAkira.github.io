@@ -1,4 +1,4 @@
 ---
-title: "Posts"
-description: "All posts."
+title: "Gönderiler"
+description: "Tüm gönderiler."
 ---
