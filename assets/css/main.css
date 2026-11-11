@@ -3,12 +3,135 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+    /* --- Kağıt Mürekkebi (light) — tailwind.config.js'deki --color-* ile aynı --- */
+    --color-background: 246 245 240; /* #F6F5F0 */
+    --color-surface: 255 253 247; /* #FFFDF7 */
+    --color-surface-dim: 246 245 240; /* #F6F5F0 */
+    --color-surface-bright: 255 253 247; /* #FFFDF7 */
+    --color-surface-container-lowest: 255 253 247; /* #FFFDF7 */
+    --color-surface-container-low: 236 234 226; /* #ECEAE2 */
+    --color-surface-container: 233 231 222; /* #E9E7DE */
+    --color-surface-container-high: 227 225 216; /* #E3E1D8 */
+    --color-surface-container-highest: 227 225 216; /* #E3E1D8 */
+    --color-surface-variant: 227 225 216; /* #E3E1D8 */
+    --color-on-surface: 26 30 40; /* #1A1E28 */
+    --color-on-background: 26 30 40; /* #1A1E28 */
+    --color-on-surface-variant: 92 95 102; /* #5C5F66 */
+    --color-primary: 179 64 42; /* #B3402A */
+    --color-surface-tint: 179 64 42; /* #B3402A */
+    --color-inverse-primary: 179 64 42; /* #B3402A */
+    --color-on-primary: 255 253 247; /* #FFFDF7 */
+    --color-primary-container: 240 217 211; /* #F0D9D3 */
+    --color-on-primary-container: 122 36 24; /* #7A2418 */
+    --color-primary-fixed: 240 217 211; /* #F0D9D3 */
+    --color-primary-fixed-dim: 229 189 180; /* #E5BDB4 */
+    --color-on-primary-fixed: 122 36 24; /* #7A2418 */
+    --color-on-primary-fixed-variant: 122 36 24; /* #7A2418 */
+    --color-secondary: 92 95 102; /* #5C5F66 */
+    --color-on-secondary: 255 253 247; /* #FFFDF7 */
+    --color-secondary-container: 236 234 226; /* #ECEAE2 */
+    --color-secondary-fixed: 236 234 226; /* #ECEAE2 */
+    --color-secondary-fixed-dim: 201 198 184; /* #C9C6B8 */
+    --color-on-secondary-fixed: 26 30 40; /* #1A1E28 */
+    --color-on-secondary-fixed-variant: 92 95 102; /* #5C5F66 */
+    --color-on-secondary-container: 26 30 40; /* #1A1E28 */
+    --color-tertiary: 240 217 211; /* #F0D9D3 */
+    --color-tertiary-container: 240 217 211; /* #F0D9D3 */
+    --color-tertiary-fixed: 240 217 211; /* #F0D9D3 */
+    --color-tertiary-fixed-dim: 229 189 180; /* #E5BDB4 */
+    --color-on-tertiary: 26 30 40; /* #1A1E28 */
+    --color-on-tertiary-container: 122 36 24; /* #7A2418 */
+    --color-on-tertiary-fixed: 122 36 24; /* #7A2418 */
+    --color-on-tertiary-fixed-variant: 122 36 24; /* #7A2418 */
+    --color-error: 158 43 37; /* #9E2B25 */
+    --color-error-container: 249 222 220; /* #F9DEDC */
+    --color-on-error: 255 253 247; /* #FFFDF7 */
+    --color-on-error-container: 65 14 11; /* #410E0B */
+    --color-outline: 227 225 216; /* #E3E1D8 */
+    --color-outline-variant: 227 225 216; /* #E3E1D8 */
+    --color-inverse-surface: 26 30 40; /* #1A1E28 */
+    --color-inverse-on-surface: 246 245 240; /* #F6F5F0 */
+    /* Kod bloğu zeminleri */
+    --code-bg: 255 253 247; /* #FFFDF7 kağıt */
+    --code-inline-bg: 236 234 226; /* #ECEAE2 */
+    --code-border: 227 225 216; /* #E3E1D8 çizgi */
+    --code-fg: 26 30 40; /* #1A1E28 mürekkep */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      /* --- Karanlık tersi: koyu zemin + açık mürekkep --- */
+      --color-background: 16 20 24; /* #101418 */
+      --color-surface: 26 30 38; /* #1A1E26 */
+      --color-surface-dim: 16 20 24; /* #101418 */
+      --color-surface-bright: 46 55 69; /* #2E3745 */
+      --color-surface-container-lowest: 26 30 38; /* #1A1E26 */
+      --color-surface-container-low: 30 36 47; /* #1E242F */
+      --color-surface-container: 33 40 52; /* #212834 */
+      --color-surface-container-high: 38 47 61; /* #262F3D */
+      --color-surface-container-highest: 38 47 61; /* #262F3D */
+      --color-surface-variant: 38 47 61; /* #262F3D */
+      --color-on-surface: 232 230 225; /* #E8E6E1 */
+      --color-on-background: 232 230 225; /* #E8E6E1 */
+      --color-on-surface-variant: 154 163 173; /* #9AA3AD */
+      --color-primary: 217 119 66; /* #D97742 metin vurgusu */
+      --color-surface-tint: 217 119 66; /* #D97742 */
+      --color-inverse-primary: 217 119 66; /* #D97742 */
+      /* Tailwind `primary` (#D97742) üstünde koyu metin: 5.87:1 (beyaz 3.10:1
+         yetersiz olduğundan koyu metin kullanılır). DaisyUI btn-primary
+         dolgusu daha koyu #B3541E kullanır, orada beyaz metin 4.91:1. */
+      --color-on-primary: 16 20 24; /* #101418 */
+      --color-primary-container: 74 39 26; /* #4A271A */
+      --color-on-primary-container: 255 233 214; /* #FFE9D6 */
+      --color-primary-fixed: 74 39 26; /* #4A271A */
+      --color-primary-fixed-dim: 92 58 40; /* #5C3A28 */
+      --color-on-primary-fixed: 232 230 225; /* #E8E6E1 */
+      --color-on-primary-fixed-variant: 232 230 225; /* #E8E6E1 */
+      --color-secondary: 154 163 173; /* #9AA3AD */
+      --color-on-secondary: 16 20 24; /* #101418 */
+      --color-secondary-container: 30 36 47; /* #1E242F */
+      --color-secondary-fixed: 33 40 52; /* #212834 */
+      --color-secondary-fixed-dim: 62 74 92; /* #3E4A5C */
+      --color-on-secondary-fixed: 232 230 225; /* #E8E6E1 */
+      --color-on-secondary-fixed-variant: 154 163 173; /* #9AA3AD */
+      --color-on-secondary-container: 232 230 225; /* #E8E6E1 */
+      --color-tertiary: 58 43 34; /* #3A2B22 */
+      --color-tertiary-container: 74 39 26; /* #4A271A */
+      --color-tertiary-fixed: 74 39 26; /* #4A271A */
+      --color-tertiary-fixed-dim: 92 58 40; /* #5C3A28 */
+      --color-on-tertiary: 232 230 225; /* #E8E6E1 */
+      --color-on-tertiary-container: 232 230 225; /* #E8E6E1 */
+      --color-on-tertiary-fixed: 232 230 225; /* #E8E6E1 */
+      --color-on-tertiary-fixed-variant: 232 230 225; /* #E8E6E1 */
+      --color-error: 255 180 171; /* #FFB4AB */
+      --color-error-container: 90 20 16; /* #5A1410 */
+      --color-on-error: 65 14 11; /* #410E0B */
+      --color-on-error-container: 255 218 214; /* #FFDAD6 */
+      --color-outline: 62 74 92; /* #3E4A5C */
+      --color-outline-variant: 62 74 92; /* #3E4A5C */
+      --color-inverse-surface: 232 230 225; /* #E8E6E1 */
+      --color-inverse-on-surface: 16 20 24; /* #101418 */
+      --code-bg: 26 30 38; /* #1A1E26 koyu zemin */
+      --code-inline-bg: 33 40 52; /* #212834 */
+      --code-border: 62 74 92; /* #3E4A5C */
+      --code-fg: 232 230 225; /* #E8E6E1 açık metin */
+    }
+  }
+
   html, body {
     margin: 0;
     padding: 0;
   }
+  html {
+    scroll-behavior: smooth;
+    background-color: rgb(var(--color-background));
+  }
   body {
     overscroll-behavior: none;
+    background-color: rgb(var(--color-background));
   }
   main > :first-child {
     margin-top: 0 !important;
@@ -16,31 +139,257 @@
   main > :last-child {
     margin-bottom: 0 !important;
   }
+
+  /* Visible keyboard focus — never remove outline without replacement */
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid rgb(var(--color-primary));
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+
   ::-webkit-scrollbar {
     display: none;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-/* Markdown content support (reference styling) */
-.markdown-body h1 { @apply font-headline-xl text-headline-xl text-primary tracking-tight mt-space-lg mb-space-sm; }
-.markdown-body h2 { @apply font-headline-lg text-headline-lg text-primary tracking-tight mt-space-lg mb-space-sm; }
-.markdown-body h3 { @apply font-headline-sm text-headline-sm text-primary mt-space-md mb-space-xs; }
-.markdown-body p { @apply font-body-md text-body-md text-on-surface-variant mb-space-md; }
-.markdown-body a { @apply text-primary-container hover:text-primary underline underline-offset-2; }
-.markdown-body strong { @apply text-primary font-semibold; }
-.markdown-body code { @apply px-1.5 py-0.5 rounded bg-surface-container-high text-primary-container font-mono text-[14px]; }
-.markdown-body pre { @apply my-space-md p-space-md rounded-DEFAULT bg-surface-container-lowest border border-surface-variant/40 overflow-x-auto font-mono text-sm text-on-surface leading-relaxed; }
-.markdown-body pre code { @apply bg-transparent p-0 text-inherit; }
-.markdown-body blockquote { @apply my-space-lg p-space-md pl-space-lg rounded-r-DEFAULT bg-surface-container border-l-4 border-primary-container text-primary font-headline-sm italic leading-snug; }
-.markdown-body blockquote footer { @apply text-label-md font-sans text-secondary-fixed-dim mt-2 not-italic font-medium; }
-.markdown-body table { @apply w-full text-left font-body-sm text-body-sm border border-surface-variant/40 rounded-DEFAULT overflow-hidden; }
-.markdown-body thead { @apply bg-surface-container text-primary font-label-md text-label-md uppercase tracking-wider; }
-.markdown-body th, .markdown-body td { @apply p-space-sm border-b border-surface-variant/40; }
-.markdown-body tbody tr:nth-child(even) { @apply bg-surface-container-lowest; }
-.markdown-body ul, .markdown-body ol { @apply mb-space-md pl-space-lg text-on-surface-variant; }
+@layer components {
+  /* Skip link — first focusable element */
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    background-color: rgb(var(--color-inverse-surface));
+    color: rgb(var(--color-inverse-on-surface));
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+  .skip-link:focus-visible {
+    top: 1rem;
+  }
+
+  /* Card hover: gentle lift only, no colour jump on whole surface */
+  .post-card {
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+  .post-card .card-title a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 180ms ease;
+  }
+  .post-card:hover {
+    transform: translateY(-2px);
+    border-color: rgb(var(--color-secondary) / 0.55);
+  }
+  .post-card:hover .card-title a {
+    text-decoration-color: rgb(var(--color-primary));
+  }
+
+  /* Text link hover */
+  .text-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgb(var(--color-primary) / 0.4);
+    transition: text-decoration-color 180ms ease, color 180ms ease;
+  }
+  .text-link:hover {
+    color: rgb(var(--color-primary));
+    text-decoration-color: rgb(var(--color-primary));
+  }
+
+  /* Mobile primary actions go full width; desktop keeps natural width */
+  .action-full {
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+    .action-full {
+      width: auto;
+    }
+  }
+}
+
+/* Markdown content — editorial serif headings, readable body */
+.markdown-body {
+  max-width: 36rem;
+  color: rgb(var(--color-on-surface));
+  font-size: 17px;
+  line-height: 29px;
+}
+.markdown-body h1 {
+  @apply font-headline-xl text-headline-xl tracking-tight mt-space-lg mb-space-sm;
+  color: rgb(var(--color-on-surface));
+  text-wrap: balance;
+}
+.markdown-body h2 {
+  @apply font-headline-lg text-headline-lg tracking-tight mt-space-lg mb-space-sm;
+  color: rgb(var(--color-on-surface));
+  text-wrap: balance;
+}
+.markdown-body h3 {
+  @apply font-headline-sm text-headline-sm mt-space-md mb-space-xs;
+  color: rgb(var(--color-on-surface));
+  text-wrap: balance;
+}
+.markdown-body h4 {
+  @apply font-headline-sm text-headline-sm mt-space-md mb-space-xs;
+  color: rgb(var(--color-on-surface));
+  text-wrap: balance;
+}
+.markdown-body p {
+  @apply font-body-lg text-body-lg mb-space-md;
+  color: rgb(var(--color-on-surface));
+  max-width: 65ch;
+}
+.markdown-body a {
+  @apply underline underline-offset-2;
+  color: rgb(var(--color-primary));
+  text-decoration-color: rgb(var(--color-primary) / 0.4);
+}
+.markdown-body a:hover {
+  color: rgb(var(--color-primary));
+  text-decoration-color: rgb(var(--color-primary));
+}
+.markdown-body strong { @apply font-semibold; color: rgb(var(--color-on-surface)); }
+/* Inline kod — blok koddan ayrı, satır içi zemin */
+.markdown-body code {
+  @apply px-1.5 py-0.5 rounded font-mono text-[0.9em];
+  background-color: rgb(var(--code-inline-bg));
+  color: rgb(var(--color-on-surface));
+}
+/* Blok kod — Hugo/Chroma (.highlight). Dracula koyu bloğu kağıda uymadığı için
+   `github` sınıf tabanlı çıktıyla (hugo.toml: noClasses=false) iki modda da
+   aşağıda override edilir. */
+.markdown-body pre {
+  @apply my-space-md p-space-md rounded-DEFAULT overflow-x-auto font-mono text-sm leading-relaxed;
+  background-color: rgb(var(--code-bg));
+  border: 1px solid rgb(var(--code-border));
+  color: rgb(var(--code-fg));
+}
+.markdown-body pre code {
+  @apply bg-transparent p-0;
+  background-color: transparent;
+  color: inherit;
+}
+/* Chroma kapsayıcısı — pre'nin içindeki tabloyu tek çerçeveye oturtur */
+.markdown-body .highlight {
+  background-color: rgb(var(--code-bg));
+  border: 1px solid rgb(var(--code-border));
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.markdown-body .highlight .chroma {
+  background-color: transparent;
+  color: rgb(var(--code-fg));
+}
+.markdown-body .highlight pre {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+}
+/* Satır numaraları sütunu dar, kod sütunu geniş */
+.markdown-body .highlight .lntd:first-child pre {
+  padding-right: 0.5rem;
+}
+.markdown-body .highlight .lntd:last-child pre {
+  padding-left: 0.5rem;
+  padding-right: 1rem;
+}
+.markdown-body blockquote { @apply my-space-lg p-space-md pl-space-lg rounded-r-DEFAULT border-l-4 font-headline-sm text-[17px] leading-[27px] italic font-normal; background-color: rgb(var(--code-inline-bg)); border-left-color: rgb(var(--color-primary)); color: rgb(var(--color-on-surface)); }
+.markdown-body blockquote footer { @apply text-label-md font-label-md mt-2 not-italic font-medium; color: rgb(var(--color-on-surface-variant)); }
+.markdown-body table { @apply w-full text-left font-body-sm text-body-sm border rounded-DEFAULT overflow-hidden; border-color: rgb(var(--color-outline)); }
+.markdown-body thead { @apply font-label-md text-label-md uppercase tracking-wider; background-color: rgb(var(--color-surface-container)); color: rgb(var(--color-on-surface)); }
+.markdown-body th, .markdown-body td { @apply p-space-sm border-b text-on-surface; border-color: rgb(var(--color-outline)); color: rgb(var(--color-on-surface)); }
+.markdown-body tbody tr:nth-child(even) { background-color: rgb(var(--code-inline-bg)); }
+.markdown-body ul, .markdown-body ol { @apply mb-space-md pl-space-lg; color: rgb(var(--color-on-surface)); }
 .markdown-body li { @apply mb-space-xs; }
-.markdown-body hr { @apply border-surface-variant/40 my-space-lg; }
-.markdown-body figure { @apply my-space-md rounded-lg overflow-hidden bg-surface-container-low shadow-md; }
-.markdown-body figcaption { @apply p-space-sm bg-surface-container-high/90 text-on-surface-variant font-label-md text-label-md; }
-.markdown-body img { @apply w-full h-auto object-cover; }
-.markdown-body .first-letter-drop::first-letter { @apply text-5xl font-headline-xl text-primary-container float-left mr-3 leading-none; }
+.markdown-body li::marker { color: rgb(var(--color-primary)); }
+.markdown-body hr { @apply my-space-lg; border-color: rgb(var(--color-outline)); }
+.markdown-body figure { @apply my-space-md rounded-lg overflow-hidden border; background-color: rgb(var(--color-surface-container)); border-color: rgb(var(--color-outline)); }
+.markdown-body figcaption { @apply p-space-sm font-label-md text-label-md; background-color: rgb(var(--code-inline-bg)); color: rgb(var(--color-on-surface-variant)); }
+.markdown-body img { @apply h-auto max-w-full object-cover; }
+.markdown-body .first-letter-drop::first-letter { @apply text-[40px] font-headline-xl font-semibold float-left mr-3 leading-none; color: rgb(var(--color-primary)); }
+.markdown-body .toc a { @apply no-underline; color: rgb(var(--color-on-surface-variant)); }
+.markdown-body .toc a:hover { @apply underline underline-offset-2; color: rgb(var(--color-primary)); }
+
+/* --- Chroma tokenları (light = kağıt üstü koyu) ---
+   `hugo gen chromastyles --style=github` çıktısından uyarlandı;
+   zemin kağıtla hizalı, string yeşil. */
+.chroma { -webkit-text-size-adjust: none; }
+.chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+.chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+.chroma .hl { background-color: rgb(var(--code-inline-bg)); }
+.chroma .lnt, .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em; color: rgb(var(--color-on-surface-variant)); }
+.chroma .line { display: flex; }
+.chroma .cl { display: flex; }
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr, .chroma .kt { color: #CF222E; }
+.chroma .na, .chroma .nc, .chroma .nx, .chroma .p { color: #1A1E28; }
+.chroma .no, .chroma .nd, .chroma .nt, .chroma .o, .chroma .ow, .chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il, .chroma .mo { color: #0550AE; }
+.chroma .ni, .chroma .nb, .chroma .nf, .chroma .fm { color: #6639BA; }
+.chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: #953800; }
+.chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .sd, .chroma .s2, .chroma .se, .chroma .sh, .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1, .chroma .ss, .chroma .dl { color: #116329; }
+.chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs, .chroma .cp, .chroma .cpf { color: #5C5F66; }
+.chroma .gd { color: #82071E; background-color: #FFEBE9; }
+.chroma .gi { color: #116329; background-color: #DAFBE1; }
+.chroma .ge, .chroma .go { color: #1A1E28; }
+.chroma .gl { text-decoration: underline; }
+.chroma .w { color: #1A1E28; }
+.chroma .err { color: #F6F8FA; background-color: #82071E; }
+
+@media (prefers-color-scheme: dark) {
+  /* --- Chroma tokenları (dark = koyu zemin üstü açık, GitHub dark) --- */
+  .chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr, .chroma .kt { color: #FF7B72; }
+  .chroma .na, .chroma .nc, .chroma .nx, .chroma .p { color: #E8E6E1; }
+  .chroma .no, .chroma .nd, .chroma .nt, .chroma .o, .chroma .ow, .chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il, .chroma .mo { color: #79C0FF; }
+  .chroma .ni, .chroma .nb, .chroma .nf, .chroma .fm { color: #D2A8FF; }
+  .chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: #FFA657; }
+  .chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .sd, .chroma .s2, .chroma .se, .chroma .sh, .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1, .chroma .ss, .chroma .dl { color: #7EE787; }
+  .chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs, .chroma .cp, .chroma .cpf { color: #8B949E; }
+  .chroma .gd { color: #FF7B72; background-color: #3A2015; }
+  .chroma .gi { color: #7EE787; background-color: #1A2E1F; }
+  .chroma .ge, .chroma .go { color: #E8E6E1; }
+  .chroma .w { color: #E8E6E1; }
+  .chroma .err { color: #FF7B72; background-color: #3A1215; }
+}
+
+/* Article header rhythm */
+.article-header h1 { text-wrap: balance; }
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card,
+  .post-card .card-title a,
+  .text-link {
+    transition: none;
+  }
+  .post-card:hover {
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

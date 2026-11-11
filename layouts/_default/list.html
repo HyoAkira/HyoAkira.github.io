@@ -1,108 +1,67 @@
 {{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-<div class="flex flex-col w-full">
-  <!-- Carousel: Random Articles -->
-  <section class="relative w-full px-gutter pt-space-md pb-space-lg overflow-hidden">
-    <div class="w-full max-w-7xl mx-auto">
-      <div class="flex items-center justify-between mb-space-md">
-        <div class="flex items-center gap-space-sm">
-          <span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
-          <h2 class="font-headline-md text-headline-md text-primary tracking-tight">Öne Çıkanlar &amp; Son Yazılar</h2>
-        </div>
-      </div>
-      <div class="relative w-full overflow-hidden">
-        <div class="flex gap-space-lg overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 no-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
-          {{ partial "random-articles.html" . }}
-        </div>
-      </div>
+<div class="w-full px-6 py-space-xl">
+  <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+    <div class="flex flex-col gap-space-sm">
+      <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">{{ .Title }}</h1>
+      {{ with .Content }}<div class="text-body-md text-on-surface-variant max-w-xl">{{ . }}</div>{{ end }}
     </div>
-  </section>
 
-  <!-- Interactive Controls: Filter Pills & Search -->
-  <section class="w-full px-gutter pb-space-lg">
-    <div class="w-full max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-space-md bg-surface-container-low p-space-md rounded-lg shadow-sm">
-      <div class="flex flex-wrap items-center gap-space-xs" id="categoryPillContainer">
-        <button class="category-pill active-pill px-space-md py-space-sm rounded-xl font-label-md text-label-md bg-primary-container text-on-primary-container transition-all" data-cat="all" type="button">
-          {{ i18n "all" | default "Tümü" }} ({{ len .Pages }})
+    <!-- Filter + search -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-space-md bg-surface border border-outline p-space-md rounded-lg">
+      <div class="flex flex-wrap items-center gap-space-xs" id="categoryPillContainer" role="group" aria-label="{{ i18n "filter_by_category" | default "Kategori filtrele" }}">
+        <button class="btn btn-sm btn-primary category-pill active-pill" data-cat="all" type="button" aria-pressed="true">
+          {{ i18n "all" }} ({{ len .Pages }})
         </button>
         {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
-          <button class="category-pill px-space-md py-space-sm rounded-xl font-label-md text-label-md bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" data-cat="{{ $name }}" type="button">
+          <button class="btn btn-sm btn-ghost category-pill" data-cat="{{ $name }}" type="button" aria-pressed="false">
             {{ $name | title }}
           </button>
         {{ end }}
       </div>
       <div class="relative w-full md:w-80">
-        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-primary-container text-[20px]">search</span>
-        <input class="w-full bg-surface-container text-on-surface pl-space-md pr-10 py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-high transition-all shadow-inner" id="postSearchInput" placeholder="{{ i18n "search_posts" | default "Yazılarda veya etiketlerde ara..." }}" type="text">
-        <button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface text-[14px]" id="clearSearchBtn" type="button">
-          <span class="material-symbols-outlined text-[18px]">close</span>
+        <label for="postSearchInput" class="sr-only">{{ i18n "search_posts" }}</label>
+        <input type="search" class="input input-bordered w-full bg-surface pr-12" id="postSearchInput" placeholder="{{ i18n "search_posts" }}" autocomplete="off">
+        <button class="btn btn-ghost btn-sm btn-circle absolute right-2 top-1/2 -translate-y-1/2 hidden" id="clearSearchBtn" type="button" aria-label="{{ i18n "clear_search" | default "Aramayı temizle" }}">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
         </button>
       </div>
     </div>
-  </section>
 
-  <!-- Post Grid -->
-  <section class="w-full px-gutter pb-space-xl">
-    <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
-      <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">{{ .Title }}</h2>
-      {{ .Content }}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
-        {{ range .Paginator.Pages }}
-          <article class="post-card group flex flex-col justify-between rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-300 p-space-md shadow-md hover:-translate-y-1" data-category="{{ with .Params.categories }}{{ index . 0 | lower }}{{ end }}" data-title="{{ .Title | lower }}">
-
-            <div class="flex flex-col gap-space-sm">
-              <div class="relative w-full h-48 rounded-xl overflow-hidden bg-surface-container-lowest">
-                <div class="absolute top-3 left-3 z-10">
-                  {{ with .Params.categories }}<span class="px-3 py-1 rounded-full bg-surface-container/90 backdrop-blur-md text-secondary-fixed-dim font-label-md text-label-md font-semibold">{{ index . 0 }}</span>{{ end }}
-                </div>
-                <div class="z-10 flex items-center justify-end text-secondary-fixed-dim/80 h-full p-6">
-                  <span class="material-symbols-outlined text-[44px]">hub</span>
-                </div>
-              </div>
-              <div class="flex items-center text-on-surface-variant font-label-md text-label-md pt-space-xs">
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px] text-outline">calendar_today</span>
-                  <span>{{ .Date.Format "2 January 2006" }}</span>
-                </div>
-              </div>
-              <h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary-fixed-dim transition-colors line-clamp-2">
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              </h3>
-              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
-                {{ with .Description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}
-              </p>
-            </div>
-            <div class="pt-space-md mt-space-md flex items-center justify-between border-t border-surface-container-high">
-              <div class="flex items-center gap-1 text-secondary-fixed-dim font-label-md text-label-md">
-                <span class="material-symbols-outlined text-[16px]">schedule</span>
-                <span>{{ .ReadingTime }} {{ i18n "min_read" }}</span>
-              </div>
-              <a class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md group-hover:translate-x-1 transition-transform font-medium" href="{{ .RelPermalink }}">
-                <span>{{ i18n "read_article" }}</span>
-                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </a>
-            </div>
-          </article>
-        {{ end }}
-      </div>
-
-      <!-- Pagination -->
-      {{ if .Paginator }}
-        <nav class="flex items-center justify-center gap-space-sm pt-space-md">
-          {{ if .Paginator.HasPrev }}
-            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Prev.URL }}">{{ i18n "previous" }}</a>
-          {{ end }}
-          {{ range .Paginator.Pagers }}
-            <a class="px-space-md py-space-sm rounded-xl {{ if eq .PageNumber $.Paginator.PageNumber }}bg-primary-container text-on-primary-container{{ else }}bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high{{ end }} transition-colors" href="{{ .URL }}">{{ .PageNumber }}</a>
-          {{ end }}
-          {{ if .Paginator.HasNext }}
-            <a class="px-space-md py-space-sm rounded-xl bg-surface-container-low text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="{{ .Paginator.Next.URL }}">{{ i18n "next" }}</a>
-          {{ end }}
-        </nav>
+    <!-- Post grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+      {{ range .Paginator.Pages }}
+        <article class="post-card bg-surface border border-outline rounded-lg p-6 flex flex-col gap-space-sm" data-category="{{ with .Params.categories }}{{ index . 0 | lower }}{{ end }}" data-title="{{ .Title | lower }}">
+          <p class="text-label-md font-medium text-on-surface-variant">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time> &middot; {{ .ReadingTime }} {{ i18n "min_read" }}
+          </p>
+          <h2 class="font-headline-md text-headline-md text-on-surface leading-tight line-clamp-2">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+          <p class="text-body-sm text-on-surface-variant line-clamp-3">
+            {{ with .Description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}
+          </p>
+        </article>
       {{ end }}
     </div>
-  </section>
+
+    {{ if .Paginator }}
+      <nav aria-label="{{ i18n "pagination" | default "Sayfalama" }}" class="flex items-center justify-center pt-space-md">
+        <div class="join">
+          {{ if .Paginator.HasPrev }}
+            <a class="join-item btn btn-sm" href="{{ .Paginator.Prev.URL }}">{{ i18n "previous" }}</a>
+          {{ end }}
+          {{ range .Paginator.Pagers }}
+            <a class="join-item btn btn-sm {{ if eq .PageNumber $.Paginator.PageNumber }}btn-primary{{ end }}" href="{{ .URL }}" {{ if eq .PageNumber $.Paginator.PageNumber }}aria-current="page"{{ end }}>{{ .PageNumber }}</a>
+          {{ end }}
+          {{ if .Paginator.HasNext }}
+            <a class="join-item btn btn-sm" href="{{ .Paginator.Next.URL }}">{{ i18n "next" }}</a>
+          {{ end }}
+        </div>
+      </nav>
+    {{ end }}
+  </div>
 </div>
 {{ end }}
 
@@ -128,12 +87,14 @@ document.addEventListener('DOMContentLoaded', function() {
   pills.forEach(pill => {
     pill.addEventListener('click', () => {
       pills.forEach(p => {
-        p.classList.remove('active-pill','bg-primary-container','text-on-primary-container');
-        p.classList.add('bg-surface-container','text-on-surface-variant');
+        p.classList.remove('btn-primary','active-pill');
+        p.classList.add('btn-ghost');
+        p.setAttribute('aria-pressed', 'false');
       });
-      pill.classList.add('active-pill','bg-primary-container','text-on-primary-container');
-      pill.classList.remove('bg-surface-container','text-on-surface-variant');
-      activeCat = pill.dataset.cat;
+      pill.classList.add('btn-primary','active-pill');
+      pill.classList.remove('btn-ghost');
+      pill.setAttribute('aria-pressed', 'true');
+      activeCat = pill.dataset.cat.toLowerCase();
       filter();
     });
   });

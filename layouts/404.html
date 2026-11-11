@@ -1,15 +1,11 @@
 {{ define "title" }}{{ i18n "not_found" }} | {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-<div class="w-full px-gutter py-space-xl">
-  <div class="max-w-3xl mx-auto flex flex-col items-center text-center gap-space-lg">
-    <span class="material-symbols-outlined text-[96px] text-primary-container">explore_off</span>
-    <h1 class="font-headline-xl text-headline-xl text-primary tracking-tight">404 — {{ i18n "not_found" }}</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant">{{ i18n "not_found_desc" }}</p>
-    <a class="inline-flex items-center gap-space-xs px-space-lg py-3 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-lg shadow-primary-container/20 transition-all hover:scale-105 active:scale-95" href="/">
-      <span>{{ i18n "go_home" }}</span>
-      <span class="material-symbols-outlined text-[18px]">home</span>
-    </a>
+<div class="w-full px-6 py-space-xl">
+  <div class="max-w-3xl mx-auto flex flex-col items-start gap-space-md py-space-xl">
+    <h1 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-on-surface tracking-tight">404 — {{ i18n "not_found" }}</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">{{ i18n "not_found_desc" }}</p>
+    <a class="btn btn-primary action-full justify-center" href="/">{{ i18n "go_home" }}</a>
   </div>
 </div>
 {{ end }}

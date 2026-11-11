@@ -5,21 +5,18 @@
 - **API base:** http://localhost:9000/api/v1
 
 ## Credentials
-- **Username:** admin
-- **Password:** 123123
-- **Email:** admin@localhost
+- **Username:** ai-agent
+- **Password:** aiagent123
+- **Email:** ai-agent@localhost
 
 ## Authentication
 POST http://localhost:9000/api/v1/auth
 Content-Type: application/json
-Body: {"username":"admin","password":"123123","type":"normal"}
+Body: {"username":"ai-agent","password":"aiagent123","type":"normal"}
 
 Response field with token: `auth_token` (use as `Authorization: Bearer <auth_token>`).
 
-Cached token (may expire; re-authenticate if 401):
-```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc5NDYwNzY4OSwianRpIjoiM2Q4ZTk3YTMwNjgwNDMzMDkzNmE3NThmIn0... (see /tmp/opencode/taiga_token.txt)
-```
+Cached token (may expire; re-authenticate if 401): re-authenticate with the body above if a 401 is returned. Do not store tokens in this file.
 
 ## Project
 - **Name:** Personal Blog
@@ -36,19 +33,27 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc
 - Task statuses: /api/v1/task-statuses?project=1
 - User story statuses: /api/v1/userstory-statuses?project=1
 
-## User Story
-- ID: 1 — "Hugo blog infrastructure setup" (status: In progress)
-
-## Tasks
+## User Stories (all Done)
 | ID | Subject | Status |
 |----|---------|--------|
-| 1 | Create project folder and init Hugo | Closed |
-| 2 | Configure hugo.toml | Closed |
-| 3 | Add layout scaffold | Closed |
-| 4 | Content scaffolding | Closed |
-| 5 | Deployment readiness | Closed |
-| 6 | SEO verification | Closed |
-| 7 | Deferred theme work (Tailwind) | New |
+| 1 | Hugo blog infrastructure setup | Done |
+| 3 | Blog features: tags, related and random articles | Done |
+| 4 | Hugo theme with daisyUI (reference design) | Done |
+| 5 | Post-launch enhancements: i18n, math/code, filtering, UX fixes | Done |
+| 6 | Design adjustments & bug fixes (post-launch) | Done |
+| 7 | Design tweaks: hero image placeholder | Done |
+| 8 | Rewrite theme components using daisyUI | Done |
+| 9 | Responsive theme redesign + system light/dark + code-block | Done |
+
+## Tasks
+All tasks from 1 through 30 are Closed. No open tasks.
+
+Tasks for User Story 9 (all Closed):
+| ID | Subject | Status |
+|----|---------|--------|
+| 42 | Responsive redesign: layout, typography, remove duplicate featured components | Closed |
+| 43 | System light/dark theme (prefers-color-scheme) | Closed |
+| 44 | Adapt code-block theme to light/dark | Closed |
 
 ## AI Agent User
 - **Username:** ai-agent
@@ -63,14 +68,3 @@ Cached token (may expire; re-authenticate if 401):
 ```
 Use /api/v1/auth with username ai-agent / password aiagent123
 ```
-
-## User Stories (all Done)
-| ID | Subject |
-|----|---------|
-| 1 | Hugo blog infrastructure setup |
-| 3 | Blog features: tags, related and random articles |
-| 4 | Hugo theme with daisyUI (reference design) |
-| 5 | Post-launch enhancements: i18n, math/code, filtering, UX fixes |
-
-## Tasks
-All tasks (1-25) are Closed. No open tasks.

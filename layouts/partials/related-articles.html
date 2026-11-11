@@ -1,22 +1,16 @@
-{{/* Related articles partial - 5 items */}}
+{{/* Related articles — quiet text list */}}
 {{ with site.RegularPages.Related . | first 5 }}
-  <div class="rounded-lg bg-surface-container p-space-lg shadow-md flex flex-col gap-space-md">
-    <div class="flex items-center gap-space-xs text-primary">
-      <span class="material-symbols-outlined text-[20px]">auto_stories</span>
-      <h3 class="font-headline-sm text-headline-sm tracking-tight">{{ i18n "related" }}</h3>
-    </div>
-    <div class="flex flex-col gap-space-sm">
+  <section class="bg-surface border border-outline rounded-lg p-6 flex flex-col gap-space-sm" aria-labelledby="related-heading">
+    <h2 id="related-heading" class="font-headline-sm text-headline-sm text-on-surface">{{ i18n "related" }}</h2>
+    <ul class="flex flex-col">
       {{ range . }}
-        <a href="{{ .RelPermalink }}" class="group flex items-center gap-space-sm">
-          <div class="w-16 h-16 rounded-DEFAULT bg-surface-container-highest overflow-hidden flex-shrink-0 flex items-center justify-center text-primary-container/60">
-            <span class="material-symbols-outlined text-[28px]">article</span>
-          </div>
-          <div class="flex flex-col justify-center min-w-0">
-            <h4 class="font-body-sm text-body-sm font-semibold text-primary truncate group-hover:text-primary-container transition-colors">{{ .Title }}</h4>
-            <span class="font-label-md text-label-md text-outline">{{ .Date.Format "2 January 2006" }}</span>
-          </div>
-        </a>
+        <li class="border-b border-outline last:border-0 py-2 first:pt-0 last:pb-0">
+          <a href="{{ .RelPermalink }}" class="flex items-baseline justify-between gap-3 no-underline py-1">
+            <span class="text-body-sm font-semibold text-on-surface line-clamp-2">{{ .Title }}</span>
+            <span class="shrink-0 text-label-md font-medium text-on-surface-variant">{{ .Date.Format "2 January 2006" }}</span>
+          </a>
+        </li>
       {{ end }}
-    </div>
-  </div>
+    </ul>
+  </section>
 {{ end }}

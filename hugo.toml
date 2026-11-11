@@ -58,7 +58,11 @@ enableGitInfo = true
       block = [['$$', '$$']]
       inline = [['$', '$']]
   [markup.highlight]
-    style = "dracula"
+    # `github` (açık) + `noClasses = false` sınıf tabanlı çıktı verir;
+    # token renkleri assets/css/main.css içinde light/dark override
+    # edilir. `dracula` (koyu) kağıt zeminde okunmazdı.
+    style = "github"
+    noClasses = false
     lineNos = true
     codeFences = true
 
@@ -82,7 +86,7 @@ enableGitInfo = true
         pageRef = "/"
         weight = 10
       [[languages.tr.menus.main]]
-        name = "Postlar"
+        name = "Gönderiler"
         pageRef = "/posts/"
         weight = 20
       [[languages.tr.menus.main]]

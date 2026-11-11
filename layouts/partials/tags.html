@@ -1,4 +1,4 @@
-{{/* Tags partial */}}
+{{/* Tags — quiet text links */}}
 {{ range .GetTerms "tags" }}
-  <a class="px-2 py-0.5 rounded-full bg-surface-container-low text-outline text-[12px] hover:text-primary-container transition-colors" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+  <a class="text-link font-label-md text-label-md font-medium" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
 {{ end }}

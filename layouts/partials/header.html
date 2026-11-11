@@ -1,21 +1,17 @@
-{{/* Header partial */}}
-<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]">
-  <div class="h-20 w-full px-gutter flex items-center justify-between gap-space-md">
-    <div class="flex items-center gap-space-lg">
-      <a class="flex items-center gap-space-sm group" href="{{ .Site.BaseURL }}">
-        <span class="font-headline-sm text-headline-sm text-primary group-hover:text-primary-container transition-colors tracking-tight">{{ .Site.Title }}</span>
-      </a>
-      <nav class="hidden md:flex items-center gap-space-xs p-1 rounded-xl bg-surface-container-low">
-        {{ range .Site.Menus.main }}
-          <a class="px-space-md py-space-sm text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-on-surface hover:bg-surface-container-high rounded-xl" href="{{ .URL }}">{{ .Name }}</a>
-        {{ end }}
-      </nav>
-    </div>
-    <div class="flex items-center gap-space-md">
-      <div class="relative hidden sm:block w-48 lg:w-64">
-        <input class="w-full bg-surface-container-low text-on-surface pl-space-md pr-9 py-space-sm rounded-xl font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container transition-all" placeholder="Arama yap" type="text">
-        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
-      </div>
+{{/* Header — light editorial masthead, desktop nav + mobile details menu */}}
+<header class="fixed top-0 inset-x-0 z-50 bg-surface/95 border-b border-outline">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+    <a href="{{ .Site.BaseURL }}" class="font-headline-sm text-headline-sm text-on-surface tracking-tight no-underline py-2">
+      {{ .Site.Title }}
+    </a>
+
+    <nav aria-label="{{ i18n "main_nav" | default "Ana menü" }}" class="hidden md:flex items-center gap-1">
+      {{ range .Site.Menus.main }}
+        <a class="px-4 py-2 rounded-full text-body-md font-medium text-on-surface-variant no-underline hover:text-on-surface hover:bg-surface-container-low" href="{{ .URL }}">{{ .Name }}</a>
+      {{ end }}
+    </nav>
+
+    <div class="flex items-center gap-2">
       {{ $other := "" }}
       {{ range .Translations }}
         {{ if ne .Language.Lang $.Language.Lang }}{{ $other = .RelPermalink }}{{ end }}
@@ -23,10 +19,20 @@
       {{ if not $other }}
         {{ if eq .Language.Lang "tr" }}{{ $other = "/en/" }}{{ else }}{{ $other = "/" }}{{ end }}
       {{ end }}
-      <a href="{{ $other }}" class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container-high text-secondary-fixed-dim hover:text-secondary font-label-md text-label-md transition-all">
-        <span class="material-symbols-outlined text-[16px]">language</span>
-        <span class="font-label-md text-label-md tracking-wider font-semibold">{{ .Language.Label }} / {{ if eq .Language.Lang "tr" }}EN{{ else }}TR{{ end }}</span>
+      <a href="{{ $other }}" class="px-3 py-2 rounded-full font-label-md text-label-md font-semibold tracking-wider text-on-surface-variant no-underline hover:text-on-surface hover:bg-surface-container-low">
+        {{ if eq .Language.Lang "tr" }}EN{{ else }}TR{{ end }}
       </a>
+
+      <details class="relative md:hidden">
+        <summary class="list-none cursor-pointer inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-surface-container-low" aria-label="{{ i18n "menu" | default "Menü" }}">
+          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        </summary>
+        <nav aria-label="{{ i18n "mobile_nav" | default "Mobil menü" }}" class="absolute right-0 mt-2 w-56 rounded-lg border border-outline bg-surface shadow-md p-2 flex flex-col">
+          {{ range .Site.Menus.main }}
+            <a class="px-4 py-3 rounded text-body-md font-medium text-on-surface no-underline hover:bg-surface-container-low" href="{{ .URL }}">{{ .Name }}</a>
+          {{ end }}
+        </nav>
+      </details>
     </div>
   </div>
 </header>
