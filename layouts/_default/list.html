@@ -33,6 +33,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
       {{ range .Paginator.Pages }}
         <article class="post-card bg-surface border border-outline rounded-lg p-6 flex flex-col gap-space-sm" data-category="{{ with .Params.categories }}{{ index . 0 | lower }}{{ end }}" data-title="{{ .Title | lower }}">
+          {{ with .Params.image }}
+            <div class="overflow-hidden rounded-md border border-outline bg-surface-container-low">
+              <img class="w-full aspect-[1200/630] object-cover" src="{{ . }}" alt="" width="1200" height="630" loading="lazy" decoding="async">
+            </div>
+          {{ end }}
           <p class="text-label-md font-medium text-on-surface-variant">
             <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time> &middot; {{ .ReadingTime }} {{ i18n "min_read" }}
           </p>

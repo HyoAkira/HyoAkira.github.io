@@ -58,3 +58,10 @@ data/
 # Runtime / caches
 .runtime/
 .cache/
+
+# Company vault: local-only credentials and editor state.
+# Never commit self-hosted Taiga, Logseq, or Google Drive credentials.
+Company/.obsidian/
+Company/Handbook/Taiga/
+Company/Handbook/Logseq/
+Company/Handbook/GDrive/
