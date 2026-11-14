@@ -50,47 +50,103 @@
       {{ with .TableOfContents }}
         <section class="bg-surface border border-outline rounded-lg p-6 flex flex-col gap-space-sm" aria-labelledby="toc-heading">
           <h2 id="toc-heading" class="font-headline-sm text-headline-sm text-on-surface">{{ i18n "contents" }}</h2>
-          <div class="text-body-sm toc" id="toc-nav" data-toc>
-            {{ . }}
+          <div class="relative flex gap-3" data-reading-map>
+            <div class="relative w-2 shrink-0" aria-hidden="true">
+              <span class="reading-map-rail absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-outline-variant/70"></span>
+              <span class="reading-map-marker absolute left-1/2 top-0 w-2.5 h-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary opacity-0 transition-[top,opacity] duration-300 ease-out motion-reduce:transition-none" data-reading-marker></span>
+            </div>
+            <div class="text-body-sm toc flex-1 min-w-0" id="toc-nav" data-toc>
+              {{ . }}
+            </div>
           </div>
         </section>
         <script>
         (function () {
           var root = document.getElementById('toc-nav');
           if (!root) return;
+          var map = root.closest('[data-reading-map]');
+          var marker = map ? map.querySelector('[data-reading-marker]') : null;
           var iconSvg = '<svg class="toc-icon w-4 h-4 shrink-0 transition-transform duration-200 ease-out motion-reduce:transition-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>';
           root.querySelectorAll('ul').forEach(function (ul) {
             ul.classList.add('flex', 'flex-col', 'gap-1', 'm-0', 'p-0', 'list-none');
           });
           root.querySelectorAll('li').forEach(function (li) {
-            li.classList.add('m-0', 'p-0');
+            li.classList.add('m-0', 'p-0', 'relative');
           });
-          root.querySelectorAll('a').forEach(function (a) {
+          var links = Array.prototype.slice.call(root.querySelectorAll('a'));
+          links.forEach(function (a) {
             if (a.querySelector('.toc-icon')) return;
-            a.classList.add('flex', 'items-center', 'gap-2', 'px-2', 'py-1.5', 'rounded-md', 'no-underline', 'text-on-surface-variant', 'hover:bg-surface-container-low', 'transition-colors', 'duration-150', 'motion-reduce:transition-none');
+            a.classList.add('flex', 'items-center', 'gap-2', 'px-2', 'py-1.5', 'rounded-md', 'no-underline', 'text-on-surface-variant', 'hover:bg-surface-container-low', 'transition-colors', 'duration-150', 'motion-reduce:transition-none', 'toc-link');
+            var tick = document.createElement('span');
+            tick.className = 'reading-map-tick inline-block w-1.5 h-1.5 rounded-full bg-outline-variant/80 shrink-0 transition-colors duration-150 motion-reduce:transition-none';
+            tick.setAttribute('aria-hidden', 'true');
+            a.insertBefore(tick, a.firstChild);
             var wrap = document.createElement('span');
             wrap.className = 'inline-flex items-center shrink-0 text-on-surface-variant';
             wrap.innerHTML = iconSvg;
-            a.insertBefore(wrap, a.firstChild);
+            a.insertBefore(wrap, tick);
             a.addEventListener('mouseenter', function () {
               a.classList.remove('text-on-surface-variant');
               a.classList.add('text-primary');
               var icon = a.querySelector('.toc-icon');
-              if (icon) {
-                icon.classList.remove('text-on-surface-variant');
-                icon.classList.add('text-primary', 'translate-x-1');
-              }
+              if (icon) { icon.classList.remove('text-on-surface-variant'); icon.classList.add('text-primary', 'translate-x-1'); }
+              var t = a.querySelector('.reading-map-tick');
+              if (t) { t.classList.remove('bg-outline-variant/80'); t.classList.add('bg-primary'); }
             });
             a.addEventListener('mouseleave', function () {
+              if (a.classList.contains('toc-active')) return;
               a.classList.remove('text-primary');
               a.classList.add('text-on-surface-variant');
               var icon = a.querySelector('.toc-icon');
-              if (icon) {
-                icon.classList.remove('text-primary', 'translate-x-1');
-                icon.classList.add('text-on-surface-variant');
-              }
+              if (icon) { icon.classList.remove('text-primary', 'translate-x-1'); icon.classList.add('text-on-surface-variant'); }
+              var t = a.querySelector('.reading-map-tick');
+              if (t) { t.classList.remove('bg-primary'); t.classList.add('bg-outline-variant/80'); }
             });
           });
+
+          function setActive(link) {
+            links.forEach(function (l) {
+              l.classList.remove('toc-active', 'text-primary');
+              l.classList.add('text-on-surface-variant');
+              var t = l.querySelector('.reading-map-tick');
+              if (t) { t.classList.remove('bg-primary'); t.classList.add('bg-outline-variant/80'); }
+              l.removeAttribute('aria-current');
+            });
+            if (!link) return;
+            link.classList.add('toc-active', 'text-primary');
+            link.classList.remove('text-on-surface-variant');
+            var t = link.querySelector('.reading-map-tick');
+            if (t) { t.classList.remove('bg-outline-variant/80'); t.classList.add('bg-primary'); }
+            link.setAttribute('aria-current', 'location');
+            if (marker && map) {
+              var mapRect = map.getBoundingClientRect();
+              var linkRect = link.getBoundingClientRect();
+              var top = linkRect.top - mapRect.top + linkRect.height / 2;
+              marker.style.top = top + 'px';
+              marker.style.opacity = '1';
+            }
+          }
+
+          var headings = Array.prototype.slice.call(document.querySelectorAll('.markdown-body h2, .markdown-body h3'));
+          if (headings.length && 'IntersectionObserver' in window) {
+            var byId = {};
+            links.forEach(function (l) {
+              var href = l.getAttribute('href') || '';
+              var id = href.replace(/^#/, '');
+              if (id) byId[id] = l;
+            });
+            var current = null;
+            var obs = new IntersectionObserver(function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) current = e.target;
+              });
+              if (current && byId[current.id]) setActive(byId[current.id]);
+            }, { rootMargin: '0px 0px -70% 0px', threshold: 0 });
+            headings.forEach(function (h) { if (h.id) obs.observe(h); });
+            if (headings[0] && byId[headings[0].id]) setActive(byId[headings[0].id]);
+          } else if (links.length) {
+            setActive(links[0]);
+          }
         })();
         </script>
       {{ end }}
