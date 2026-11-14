@@ -50,56 +50,14 @@ bounded change, built, verified, scored, and recorded. A failed loop stays in th
 
 ---
 
-## Loop 1 — Reading map on a single post
+## Loop 1 — Reading map on a single post (reverted)
 
 - **Date:** 2026-11-14
-- **Observation:** The single-post sidebar TOC was a flat list of links with a chevron
-  icon and a hover color change. It gave no sense of article shape or reading position; a
-  long post (e.g. "Agents with Wallets", 6 headings) offered no "where am I" cue beyond
-  the link list. The existing hover affordance was decorative only.
-- **Hypothesis:** If the TOC gains a vertical rail with a tick per heading and a marker
-  that slides to the current section (driven by scroll-spy), then the reader can see the
-  article's structure and their position in it, measured by an active-state highlight plus
-  a moving marker that tracks the in-view heading.
-- **Design:**
-  - Where: single-post sidebar TOC card (`layouts/_default/single.html`).
-  - What moves: a 1 px marker slides along a 1 px rail as the active heading changes;
-    each TOC link gets a tick that turns accent when active. Link text color/weight shift
-    to primary. No other motion.
-  - Duration/easing: marker slide 200 ms `cubic-bezier(0.2, 0.7, 0.2, 1)`; tick/color
-    150 ms ease.
-  - Static fallback: rail + ticks render via CSS `::before`; marker starts hidden
-    (`opacity: 0`) and only appears once JS runs. Links remain the navigation.
-  - Reduced motion: global rule zeroes transition durations; marker jumps instantly;
-    active state still updates.
-  - Mobile: rail/ticks remain; TOC collapses into the single-column flow below the
-    article; no overflow.
-  - Accessibility: links stay the tab stops; `aria-current="location"` on the active
-    link; rail/marker/ticks are `aria-hidden`. Decorative motion hidden.
-  - Performance: `IntersectionObserver` (no scroll listener); no new requests/fonts/libs.
-- **Change:** Added a rail + marker inside `#toc-nav`, a tick per TOC link via CSS
-  `::before`, an active state (`.is-active`), and scroll-spy in the existing inline
-  script using `IntersectionObserver` on `.markdown-body h2/h3`, updating the active
-  link and sliding the marker to the active item's center. Clicks also update immediately.
-- **Files:**
-  - `layouts/_default/single.html`
-  - `assets/css/main.css`
-- **Evidence (build, widths, schemes, reduced motion, keyboard):**
-  - `hugo --gc --minify` succeeds: 88 TR pages, 86 EN pages, 6 static files, no warnings.
-  - Built post page contains `data-reading-map`, `reading-map-marker`, and 5 ticks for a
-    5-heading post; heading ids match TOC `href="#..."`.
-  - Headless Firefox screenshots captured at 1440, 1024, 768, 390 (files in /tmp/opencode).
-  - No-JS: TOC links still navigate; rail + ticks render; marker hidden.
-  - Reduced motion: global rule zeroes transitions; active state updates instantly.
-  - Keyboard: TOC links remain tabbable; focus ring (3 px primary) unchanged; no new
-    focusable elements.
-  - Accessibility: `aria-current="location"` set on active link; decorative elements
-    `aria-hidden`.
+- **Observation:** Single-post TOC lacked a sense of article shape and current reading position.
+- **Hypothesis:** A rail + ticks + scroll-spy marker would make structure and position visible at a glance.
+- **Change:** Added a reading rail, per-heading ticks, and an IntersectionObserver-driven active marker in the TOC.
+- **Files:** `layouts/_default/single.html`, `assets/css/main.css`.
+- **Evidence:** Built and verified at multiple widths; no build errors.
 - **Score:** Purpose 5/5 · Craft 4/5 · Accessibility 4/5 · Performance 5/5 · Coherence 5/5
-- **Risks / follow-ups:**
-  - Marker uses `top` (layout property) rather than transform; acceptable for a single
-    small element, but could be migrated to transform for strict compositor-only motion.
-  - Scroll-spy rootMargin tuned to `-20% 0px -70% 0px`; very short sections may skip.
-  - Cards without TOC (short posts) are unaffected; rail only renders when TOC exists.
-- **Next candidate:** Code block utility — language label and copy action, keyboard
-  accessible, no layout jump (backlog item 7).
+- **Outcome:** **Reverted** — user preference; TOC restored to its prior chevron-link form.
+- **Next candidate:** Code block utility — language label and copy action, keyboard accessible, no layout jump (backlog item 7).
