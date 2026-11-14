@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="bannerTitle bannerDesc">
+  <title id="bannerTitle">Agent wallet banner</title>
+  <desc id="bannerDesc">An abstract payment card with a token and a biometric approval mark.</desc>
+  <rect width="1200" height="630" fill="#F6F5F0"/>
+  <rect x="0" y="0" width="1200" height="6" fill="#B3402A"/>
+
+  <g font-family="DejaVu Sans, sans-serif" fill="#5C5F66">
+    <text x="64" y="74" font-size="15" letter-spacing="3">AI FIELD NOTES</text>
+    <text x="64" y="100" font-size="13" letter-spacing="1.5" fill="#8B8E94">NOVEMBER 2026 / THE QUESTION ISSUE</text>
+    <text x="1136" y="74" font-size="14" text-anchor="end" letter-spacing="2">01</text>
+  </g>
+
+  <g font-family="DejaVu Serif, Georgia, serif" fill="#1A1E28">
+    <text x="64" y="476" font-size="58" letter-spacing="-1">Agents with</text>
+    <text x="64" y="534" font-size="58" letter-spacing="-1">wallets</text>
+    <text x="64" y="580" font-family="DejaVu Sans, sans-serif" font-size="13" letter-spacing="2.5" fill="#5C5F66">DELEGATION / CONSENT / TRUST</text>
+  </g>
+
+  <g transform="rotate(-7 800 310)">
+    <rect x="576" y="168" width="456" height="288" rx="28" fill="#FFFDF7" stroke="#1A1E28" stroke-width="3"/>
+    <path d="M576 214h456" stroke="#E3E1D8" stroke-width="2"/>
+    <rect x="620" y="236" width="68" height="50" rx="8" fill="#F0D9D3" stroke="#B3402A" stroke-width="2.5"/>
+    <path d="M637 236v50M654 236v50M671 236v50M620 252h68M620 269h68" stroke="#B3402A" stroke-width="2"/>
+    <path d="M720 250c18-14 36-14 54 0M724 264c14-10 28-10 42 0M729 278c9-6 18-6 27 0" fill="none" stroke="#5C5F66" stroke-width="3" stroke-linecap="round"/>
+    <rect x="620" y="330" width="210" height="12" rx="6" fill="#D8D3C4"/>
+    <rect x="620" y="358" width="138" height="12" rx="6" fill="#E3E1D8"/>
+    <circle cx="926" cy="360" r="66" fill="none" stroke="#B3402A" stroke-width="2.5" stroke-dasharray="5 9"/>
+    <circle cx="926" cy="360" r="45" fill="#B3402A"/>
+    <path d="M906 360l14 14 27-30" fill="none" stroke="#FFFDF7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M752 394c46 34 92 34 138 0" fill="none" stroke="#5C5F66" stroke-width="2.5" stroke-dasharray="5 8" stroke-linecap="round"/>
+    <circle cx="752" cy="394" r="5" fill="#B3402A"/>
+  </g>
+
+  <g fill="#B3402A" opacity=".75">
+    <circle cx="1072" cy="160" r="5"/>
+    <circle cx="1104" cy="196" r="3"/>
+    <circle cx="1044" cy="204" r="3"/>
+  </g>
+</svg>

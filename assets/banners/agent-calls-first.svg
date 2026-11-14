@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="bannerTitle bannerDesc">
+  <title id="bannerTitle">Agent calls first banner</title>
+  <desc id="bannerDesc">Concentric attention rings around a signal, with small notification cards at the edges.</desc>
+  <rect width="1200" height="630" fill="#F6F5F0"/>
+  <rect x="0" y="0" width="1200" height="6" fill="#B3402A"/>
+
+  <g font-family="DejaVu Sans, sans-serif" fill="#5C5F66">
+    <text x="64" y="74" font-size="15" letter-spacing="3">AI FIELD NOTES</text>
+    <text x="64" y="100" font-size="13" letter-spacing="1.5" fill="#8B8E94">NOVEMBER 2026 / THE QUESTION ISSUE</text>
+    <text x="1136" y="74" font-size="14" text-anchor="end" letter-spacing="2">04</text>
+  </g>
+
+  <g font-family="DejaVu Serif, Georgia, serif" fill="#1A1E28">
+    <text x="64" y="476" font-size="58" letter-spacing="-1">The agent that</text>
+    <text x="64" y="534" font-size="58" letter-spacing="-1">calls first</text>
+    <text x="64" y="580" font-family="DejaVu Sans, sans-serif" font-size="13" letter-spacing="2.5" fill="#5C5F66">ATTENTION / INITIATIVE / CONTROL</text>
+  </g>
+
+  <g>
+    <circle cx="900" cy="316" r="176" fill="none" stroke="#E3E1D8" stroke-width="2"/>
+    <circle cx="900" cy="316" r="136" fill="none" stroke="#B3402A" stroke-width="2" stroke-dasharray="4 10"/>
+    <circle cx="900" cy="316" r="96" fill="none" stroke="#1A1E28" stroke-width="2"/>
+    <circle cx="900" cy="316" r="56" fill="#F0D9D3"/>
+    <circle cx="900" cy="316" r="20" fill="#B3402A"/>
+
+    <path d="M900 260v-30M900 402v30M844 316h-30M956 316h30" stroke="#1A1E28" stroke-width="2" stroke-linecap="round"/>
+    <path d="M900 200a116 116 0 0 1 116 116" fill="none" stroke="#B3402A" stroke-width="3" stroke-linecap="round"/>
+    <path d="M784 316a116 116 0 0 1 116-116" fill="none" stroke="#1A1E28" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+
+    <rect x="640" y="188" width="112" height="54" rx="10" fill="#FFFDF7" stroke="#1A1E28" stroke-width="2"/>
+    <rect x="660" y="208" width="60" height="6" rx="3" fill="#B3402A"/>
+    <rect x="660" y="222" width="38" height="5" rx="2.5" fill="#D8D3C4"/>
+    <path d="M752 215l28 14-28 14" fill="none" stroke="#B3402A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="1000" y="364" width="112" height="54" rx="10" fill="#FFFDF7" stroke="#1A1E28" stroke-width="2"/>
+    <rect x="1020" y="384" width="52" height="6" rx="3" fill="#1A1E28"/>
+    <rect x="1020" y="398" width="70" height="5" rx="2.5" fill="#D8D3C4"/>
+
+    <circle cx="1080" cy="176" r="5" fill="#B3402A"/>
+    <circle cx="1112" cy="212" r="3" fill="#B3402A"/>
+    <circle cx="1048" cy="216" r="3" fill="#B3402A"/>
+  </g>
+</svg>

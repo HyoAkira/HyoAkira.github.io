@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "Company/README.md",
+    "Company/**/*.md"
+  ],
+  "commands": {
+    "theme-loop": {
+      "description": "Run one iteration of the theme animation and visualization loop",
+      "template": "Read prompts/theme-loop.md in full and execute exactly one iteration of the loop. Do not skip the verification gates. Report the loop number, the single change made, the evidence, and the next candidate."
+    }
+  }
+}
